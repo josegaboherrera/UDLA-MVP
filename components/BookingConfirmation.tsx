@@ -4,23 +4,45 @@ interface ConfirmationProps {
   reservationNumber: string
   spaceName: string
   applicantName: string
+  applicantEmail: string
   startDate: string
   startTime: string
   endTime: string
   totalAmount: string
   rentalPurpose?: string
+  emailStatus: 'idle' | 'sending' | 'sent' | 'error'
+  emailError?: string
 }
 
 export default function BookingConfirmation({
   reservationNumber,
   spaceName,
   applicantName,
+  applicantEmail,
   startDate,
   startTime,
   endTime,
   totalAmount,
   rentalPurpose,
+  emailStatus,
+  emailError,
 }: ConfirmationProps) {
+  const getEmailMessage = () => {
+    if (emailStatus === 'sending') {
+      return 'Enviando correo de confirmación...'
+    }
+
+    if (emailStatus === 'sent') {
+      return `Se ha enviado un correo de confirmación a ${applicantEmail}.`
+    }
+
+    if (emailStatus === 'error') {
+      return `No se pudo enviar el correo de confirmación: ${emailError || 'Error desconocido.'}`
+    }
+
+    return 'Preparando el envío del correo de confirmación.'
+  }
+
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto text-center">
       <div className="mb-6">
@@ -80,8 +102,8 @@ export default function BookingConfirmation({
         </div>
       </div>
 
-      <p className="text-sm text-gray-600 mb-8">
-        Se ha enviado un correo de confirmación a tu dirección de correo registrada.
+      <p className={`text-sm mb-8 ${emailStatus === 'error' ? 'text-red-600' : 'text-gray-600'}`}>
+        {getEmailMessage()}
       </p>
 
       <div className="flex gap-4">
