@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         udla: {
-          red: "#C8102E",
-          "red-dark": "#A00D24",
-          black: "#1D1D1B",
-          "gray-dark": "#4A4A4A",
-          gray: "#6B6B6B",
+          red: "#E4002B",
+          "red-dark": "#C8102E",
+          black: "#000000",
+          "gray-dark": "#333333",
+          gray: "#666666",
           "gray-light": "#F5F5F5",
           white: "#FFFFFF",
         },

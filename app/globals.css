@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --udla-red: #C8102E;
-    --udla-red-dark: #A00D24;
-    --udla-black: #1D1D1B;
-    --udla-gray-dark: #4A4A4A;
-    --udla-gray: #6B6B6B;
+    --udla-red: #E4002B;
+    --udla-red-dark: #C8102E;
+    --udla-black: #000000;
+    --udla-gray-dark: #333333;
+    --udla-gray: #666666;
     --udla-gray-light: #F5F5F5;
     --udla-white: #FFFFFF;
   }
