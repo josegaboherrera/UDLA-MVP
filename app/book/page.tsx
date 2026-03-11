@@ -96,6 +96,7 @@ export default function BookPage() {
   const [applicantData, setApplicantData] = useState<ApplicantData>()
   const [selectedSpaceId, setSelectedSpaceId] = useState<number>()
   const [selectedRentalPurpose, setSelectedRentalPurpose] = useState<string>('')
+  const [selectedEventName, setSelectedEventName] = useState<string>('')
   const [selectedDateTime, setSelectedDateTime] = useState<{ startDate: string; startTime: string; endTime: string }>({
     startDate: '',
     startTime: '',
@@ -119,9 +120,10 @@ export default function BookPage() {
     setCurrentStep('space-selection')
   }
 
-  const handleSpaceSelect = (spaceId: number, rentalPurpose: string) => {
+  const handleSpaceSelect = (spaceId: number, rentalPurpose: string, eventName: string) => {
     setSelectedSpaceId(spaceId)
     setSelectedRentalPurpose(rentalPurpose)
+    setSelectedEventName(eventName)
     setCurrentStep('date-time')
   }
 
@@ -203,7 +205,7 @@ export default function BookPage() {
                 ¡Bienvenido, <strong>{applicantData.nombresCompletos}</strong>! Por favor selecciona un espacio para reservar.
               </p>
             </div>
-            <SpaceSelection spaces={mockSpaces} selectedSpaceId={selectedSpaceId} selectedRentalPurpose={selectedRentalPurpose} onSelect={handleSpaceSelect} />
+            <SpaceSelection spaces={mockSpaces} selectedSpaceId={selectedSpaceId} selectedRentalPurpose={selectedRentalPurpose} selectedEventName={selectedEventName} onSelect={handleSpaceSelect} />
             <button
               onClick={() => setCurrentStep('applicant-data')}
               className="mt-6 mx-auto block bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
@@ -221,6 +223,9 @@ export default function BookPage() {
               </p>
               <p className="text-sm text-gray-500 mt-2">
                 Destino: <strong>{selectedRentalPurpose}</strong>
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Evento: <strong>{selectedEventName}</strong>
               </p>
             </div>
             <DateTimeSelection onSelect={handleDateTimeSelect} selected={selectedDateTime} />
@@ -240,6 +245,7 @@ export default function BookPage() {
               amount={totalAmount}
               spaceName={selectedSpace.name}
               rentalPurpose={selectedRentalPurpose}
+              eventName={selectedEventName}
             />
             <button
               onClick={() => setCurrentStep('date-time')}
@@ -260,6 +266,7 @@ export default function BookPage() {
             endTime={selectedDateTime.endTime}
             totalAmount={totalAmount.toFixed(2)}
             rentalPurpose={selectedRentalPurpose}
+            eventName={selectedEventName}
           />
         )}
       </div>

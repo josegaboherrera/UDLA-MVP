@@ -7,12 +7,14 @@ interface SpaceSelectionProps {
   spaces: Space[]
   selectedSpaceId?: number
   selectedRentalPurpose?: string
-  onSelect: (spaceId: number, rentalPurpose: string) => void
+  selectedEventName?: string
+  onSelect: (spaceId: number, rentalPurpose: string, eventName: string) => void
 }
 
-export default function SpaceSelection({ spaces, selectedSpaceId, selectedRentalPurpose, onSelect }: SpaceSelectionProps) {
+export default function SpaceSelection({ spaces, selectedSpaceId, selectedRentalPurpose, selectedEventName, onSelect }: SpaceSelectionProps) {
   const [showPurposeForm, setShowPurposeForm] = useState(false)
   const [selectedPurpose, setSelectedPurpose] = useState<string>(selectedRentalPurpose || '')
+  const [eventName, setEventName] = useState<string>(selectedEventName || '')
   const [currentSelectedSpaceId, setCurrentSelectedSpaceId] = useState<number | null>(null)
   
   const currentSelectedSpace = currentSelectedSpaceId ? spaces.find(s => s.id === currentSelectedSpaceId) : null
@@ -27,8 +29,8 @@ export default function SpaceSelection({ spaces, selectedSpaceId, selectedRental
   }
 
   const handleConfirmSelection = () => {
-    if (currentSelectedSpaceId && selectedPurpose) {
-      onSelect(currentSelectedSpaceId, selectedPurpose)
+    if (currentSelectedSpaceId && selectedPurpose && eventName.trim()) {
+      onSelect(currentSelectedSpaceId, selectedPurpose, eventName.trim())
       setShowPurposeForm(false)
     }
   }
@@ -36,6 +38,7 @@ export default function SpaceSelection({ spaces, selectedSpaceId, selectedRental
   const handleCancelPurpose = () => {
     setShowPurposeForm(false)
     setSelectedPurpose('')
+    setEventName('')
     setCurrentSelectedSpaceId(null)
   }
 
@@ -94,12 +97,26 @@ export default function SpaceSelection({ spaces, selectedSpaceId, selectedRental
               ))}
             </select>
 
+            <div className="mb-6">
+              <label className="block text-lg font-semibold mb-4">
+                Nombre del Evento <span className="text-red-600">*</span>
+              </label>
+              <p className="text-gray-600 mb-4">Ingresa el nombre del evento que realizarás:</p>
+              <input
+                type="text"
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+                placeholder="Ej: Conferencia de Tecnología 2026"
+                className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none text-base"
+              />
+            </div>
+
             <div className="flex gap-4">
               <button
                 onClick={handleConfirmSelection}
-                disabled={!selectedPurpose}
+                disabled={!selectedPurpose || !eventName.trim()}
                 className={`flex-1 p-3 rounded font-semibold transition ${
-                  selectedPurpose
+                  selectedPurpose && eventName.trim()
                     ? 'bg-green-600 text-white hover:bg-green-700'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}

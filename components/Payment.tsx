@@ -12,9 +12,10 @@ interface PaymentProps {
   amount: number
   spaceName: string
   rentalPurpose?: string
+  eventName?: string
 }
 
-export default function Payment({ onSubmit, amount, spaceName, rentalPurpose }: PaymentProps) {
+export default function Payment({ onSubmit, amount, spaceName, rentalPurpose, eventName }: PaymentProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -35,6 +36,7 @@ export default function Payment({ onSubmit, amount, spaceName, rentalPurpose }: 
         <h3 className="font-semibold text-lg mb-2">Resumen de la Reserva</h3>
         <p className="text-gray-600">Espacio: {spaceName}</p>
         {rentalPurpose && <p className="text-gray-600">Destino del Alquiler: {rentalPurpose}</p>}
+        {eventName && <p className="text-gray-600">Evento: {eventName}</p>}
         <p className="text-2xl font-bold text-green-600 mt-2">${amount.toFixed(2)}</p>
       </div>
 

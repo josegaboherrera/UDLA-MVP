@@ -9,6 +9,7 @@ interface ConfirmationProps {
   endTime: string
   totalAmount: string
   rentalPurpose?: string
+  eventName?: string
 }
 
 export default function BookingConfirmation({
@@ -20,6 +21,7 @@ export default function BookingConfirmation({
   endTime,
   totalAmount,
   rentalPurpose,
+  eventName,
 }: ConfirmationProps) {
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto text-center">
@@ -63,6 +65,12 @@ export default function BookingConfirmation({
             <div className="flex justify-between">
               <span className="text-gray-600">Destino del Alquiler:</span>
               <span>{rentalPurpose}</span>
+            </div>
+          )}
+          {eventName && (
+            <div className="flex justify-between">
+              <span className="text-gray-600">Nombre del Evento:</span>
+              <span>{eventName}</span>
             </div>
           )}
           <div className="flex justify-between">
