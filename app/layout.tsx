@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'UDLA Space Booking',
-  description: 'Book university spaces online',
+  title: 'Reserva de Espacios | UDLA',
+  description: 'Sistema de reservas de espacios universitarios - Universidad de Las Américas',
 }
 
 export default function RootLayout({
@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="es">
+      <body className="antialiased">{children}</body>
     </html>
   )
 }

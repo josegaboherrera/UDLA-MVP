@@ -151,8 +151,26 @@ export default function BookPage() {
   const totalAmount = baseAmount - discount
 
   return (
-    <div className="bg-gray-50 min-h-screen py-10">
-      <div className="container mx-auto max-w-4xl">
+    <div className="bg-udla-gray-light min-h-screen">
+      {/* Header */}
+      <header className="bg-udla-black py-4">
+        <div className="container mx-auto px-4 flex items-center justify-between">
+          <a href="/" className="flex items-center gap-3">
+            <svg viewBox="0 0 100 40" className="h-8 w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="0" y="30" fill="white" fontSize="28" fontWeight="bold" fontFamily="Arial, sans-serif">UDLA</text>
+            </svg>
+            <div className="hidden sm:block border-l border-white/30 pl-3">
+              <span className="text-white/80 text-sm">Reserva de Espacios</span>
+            </div>
+          </a>
+          <nav className="flex items-center gap-6">
+            <a href="/" className="text-white/80 hover:text-white text-sm transition">Inicio</a>
+            <a href="/admin" className="text-white/80 hover:text-white text-sm transition">Admin</a>
+          </nav>
+        </div>
+      </header>
+
+      <div className="container mx-auto max-w-4xl py-10 px-4">
         {/* Progress Indicator */}
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
@@ -167,17 +185,17 @@ export default function BookPage() {
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                     currentStep === item.step
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-udla-red text-white'
                       : ['applicant-data', 'space-selection', 'date-time', 'payment', 'confirmation'].indexOf(
                           currentStep
                         ) > ['applicant-data', 'space-selection', 'date-time', 'payment', 'confirmation'].indexOf(item.step)
                       ? 'bg-green-600 text-white'
-                      : 'bg-gray-300 text-gray-700'
+                      : 'bg-gray-300 text-udla-gray-dark'
                   }`}
                 >
                   {index + 1}
                 </div>
-                <span className="text-xs ml-2">{item.label}</span>
+                <span className="text-xs ml-2 text-udla-gray-dark">{item.label}</span>
                 {index < 4 && (
                   <div
                     className={`h-1 flex-1 mx-2 ${
@@ -208,7 +226,7 @@ export default function BookPage() {
             <SpaceSelection spaces={mockSpaces} selectedSpaceId={selectedSpaceId} selectedRentalPurpose={selectedRentalPurpose} selectedEventName={selectedEventName} onSelect={handleSpaceSelect} />
             <button
               onClick={() => setCurrentStep('applicant-data')}
-              className="mt-6 mx-auto block bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
+              className="mt-6 mx-auto block bg-udla-gray text-white px-6 py-2 rounded hover:bg-udla-gray-dark transition"
             >
               Atrás
             </button>
@@ -231,7 +249,7 @@ export default function BookPage() {
             <DateTimeSelection onSelect={handleDateTimeSelect} selected={selectedDateTime} />
             <button
               onClick={() => setCurrentStep('space-selection')}
-              className="mt-6 mx-auto block bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
+              className="mt-6 mx-auto block bg-udla-gray text-white px-6 py-2 rounded hover:bg-udla-gray-dark transition"
             >
               Atrás
             </button>
@@ -249,7 +267,7 @@ export default function BookPage() {
             />
             <button
               onClick={() => setCurrentStep('date-time')}
-              className="mt-6 mx-auto block bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
+              className="mt-6 mx-auto block bg-udla-gray text-white px-6 py-2 rounded hover:bg-udla-gray-dark transition"
             >
               Atrás
             </button>
