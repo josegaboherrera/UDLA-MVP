@@ -78,9 +78,8 @@ const pricingRules: PricingRule[] = [
 type BookingStep = 'applicant-data' | 'space-selection' | 'date-time' | 'payment' | 'confirmation'
 
 interface ApplicantData {
-  nombres: string
-  apellidos: string
-  cedula: string
+  nombresCompletos: string
+  cedulaRuc: string
   correo: string
   telefono: string
 }
@@ -108,10 +107,10 @@ export default function BookPage() {
 
   const handleApplicantDataSubmit = (data: ApplicantData) => {
     // Validate that the cédula matches an authorized applicant
-    const authorizedApplicant = mockApplicants.find(applicant => applicant.id === data.cedula)
+    const authorizedApplicant = mockApplicants.find(applicant => applicant.id === data.cedulaRuc)
     
     if (!authorizedApplicant) {
-      setValidationError('Cédula no autorizada. Por favor contacte al administrador.')
+      setValidationError('Cédula o RUC no autorizado. Por favor contacte al administrador.')
       return
     }
     
@@ -201,7 +200,7 @@ export default function BookPage() {
           <div>
             <div className="mb-6 text-center">
               <p className="text-gray-600">
-                ¡Bienvenido, <strong>{applicantData.nombres} {applicantData.apellidos}</strong>! Por favor selecciona un espacio para reservar.
+                ¡Bienvenido, <strong>{applicantData.nombresCompletos}</strong>! Por favor selecciona un espacio para reservar.
               </p>
             </div>
             <SpaceSelection spaces={mockSpaces} selectedSpaceId={selectedSpaceId} selectedRentalPurpose={selectedRentalPurpose} onSelect={handleSpaceSelect} />
@@ -255,7 +254,7 @@ export default function BookPage() {
           <BookingConfirmation
             reservationNumber={reservationNumber}
             spaceName={selectedSpace.name}
-            applicantName={`${applicantData.nombres} ${applicantData.apellidos}`}
+            applicantName={applicantData.nombresCompletos}
             startDate={selectedDateTime.startDate}
             startTime={selectedDateTime.startTime}
             endTime={selectedDateTime.endTime}

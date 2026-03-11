@@ -2,7 +2,7 @@
 
 export default function BookingProcess() {
   const steps = [
-    { number: 1, title: 'Datos del Solicitante', description: 'Ingrese sus datos personales' },
+    { number: 1, title: 'Datos del Solicitante', description: 'Ingrese sus datos de identificación y facturación' },
     { number: 2, title: 'Selección de Espacio', description: 'Elija entre espacios disponibles' },
     { number: 3, title: 'Fecha y Hora', description: 'Seleccione su horario preferido' },
     { number: 4, title: 'Pago', description: 'Complete los detalles de pago' },
