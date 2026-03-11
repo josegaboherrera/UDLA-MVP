@@ -1,0 +1,6 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="320" rx="24" fill="#002D72"/>
+  <path d="M54 74H266V102H54V74ZM74 118H246V146H74V118ZM96 162H224V190H96V162Z" fill="#C8A24A"/>
+  <path d="M70 234L90 210L110 234L130 210L150 234L170 210L190 234L210 210L230 234" stroke="#C8A24A" stroke-width="10" stroke-linecap="round"/>
+  <text x="160" y="286" text-anchor="middle" font-size="64" font-weight="700" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif">UDLA</text>
+</svg>

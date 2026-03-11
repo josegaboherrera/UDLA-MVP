@@ -6,13 +6,16 @@ export default function Hero() {
   }
 
   return (
-    <section className="bg-blue-600 text-white py-20">
-      <div className="container mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-4">Reservar un Espacio Universitario</h1>
-        <p className="text-xl mb-8">Reserve auditorios, canchas deportivas, aulas y más para sus eventos.</p>
+    <section className="udla-gradient text-white py-20">
+      <div className="container mx-auto px-4 text-center">
+        <p className="mb-2 text-sm uppercase tracking-[0.25em] text-blue-100">Campus UDLA</p>
+        <h1 className="text-4xl font-bold mb-4">Reserva de Espacios Universitarios</h1>
+        <p className="text-xl mb-8 text-blue-100">
+          Solicite auditorios, canchas deportivas, aulas y más con una experiencia visual alineada a la marca UDLA.
+        </p>
         <button
           onClick={handleStartBooking}
-          className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+          className="rounded-lg border-2 border-[var(--udla-gold)] bg-[var(--udla-gold)] px-8 py-3 font-semibold text-[var(--udla-blue)] transition hover:bg-[#dab663]"
         >
           Comenzar Reserva
         </button>
