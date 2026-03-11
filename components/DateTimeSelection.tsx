@@ -7,6 +7,20 @@ interface DateTimeSelectionProps {
   selected?: { startDate: string; startTime: string; endTime: string }
 }
 
+// Generate time slots in 15-minute intervals
+const generateTimeSlots = () => {
+  const slots: string[] = []
+  for (let hour = 0; hour < 24; hour++) {
+    for (let minute = 0; minute < 60; minute += 15) {
+      const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+      slots.push(timeString)
+    }
+  }
+  return slots
+}
+
+const TIME_SLOTS = generateTimeSlots()
+
 export default function DateTimeSelection({ onSelect, selected }: DateTimeSelectionProps) {
   const [selectedDate, setSelectedDate] = useState(selected?.startDate || '')
   const [selectedStartTime, setSelectedStartTime] = useState(selected?.startTime || '')
@@ -19,17 +33,37 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
     return now.toISOString().split('T')[0]
   }, [])
 
-  // Get current time in HH:MM format
-  const getCurrentTime = () => {
+  // Get current time rounded up to next 15-minute interval
+  const getCurrentTimeRounded = () => {
     const now = new Date()
-    return now.toTimeString().slice(0, 5)
+    const minutes = now.getMinutes()
+    const roundedMinutes = Math.ceil(minutes / 15) * 15
+    
+    if (roundedMinutes === 60) {
+      now.setHours(now.getHours() + 1)
+      now.setMinutes(0)
+    } else {
+      now.setMinutes(roundedMinutes)
+    }
+    
+    return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
   }
 
   // Check if selected date is today
   const isToday = selectedDate === today
 
-  // Get minimum start time (if today, use current time, otherwise 00:00)
-  const minStartTime = isToday ? getCurrentTime() : '00:00'
+  // Filter available start times based on date
+  const availableStartTimes = useMemo(() => {
+    if (!isToday) return TIME_SLOTS
+    const currentTimeRounded = getCurrentTimeRounded()
+    return TIME_SLOTS.filter(time => time >= currentTimeRounded)
+  }, [isToday, selectedDate])
+
+  // Filter available end times (must be after start time)
+  const availableEndTimes = useMemo(() => {
+    if (!selectedStartTime) return TIME_SLOTS
+    return TIME_SLOTS.filter(time => time > selectedStartTime)
+  }, [selectedStartTime])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -41,15 +75,6 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
       return
     }
 
-    // Validate times if today
-    if (isToday) {
-      const currentTime = getCurrentTime()
-      if (selectedStartTime < currentTime) {
-        setError('La hora de inicio no puede ser anterior a la hora actual.')
-        return
-      }
-    }
-
     // Validate end time is after start time
     if (selectedEndTime <= selectedStartTime) {
       setError('La hora de fin debe ser posterior a la hora de inicio.')
@@ -57,6 +82,15 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
     }
 
     onSelect(selectedDate, selectedStartTime, selectedEndTime)
+  }
+
+  // Reset end time if start time changes and end time is invalid
+  const handleStartTimeChange = (newStartTime: string) => {
+    setSelectedStartTime(newStartTime)
+    if (selectedEndTime && selectedEndTime <= newStartTime) {
+      setSelectedEndTime('')
+    }
+    setError('')
   }
 
   return (
@@ -71,6 +105,8 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
             value={selectedDate}
             onChange={(e) => {
               setSelectedDate(e.target.value)
+              setSelectedStartTime('')
+              setSelectedEndTime('')
               setError('')
             }}
             min={today}
@@ -81,36 +117,48 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-sm font-semibold mb-2 text-udla-gray-dark">Hora de Inicio</label>
-            <input
-              type="time"
+            <select
               name="startTime"
               value={selectedStartTime}
-              onChange={(e) => {
-                setSelectedStartTime(e.target.value)
-                setError('')
-              }}
-              min={minStartTime}
+              onChange={(e) => handleStartTimeChange(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg focus:border-udla-red focus:ring-2 focus:ring-udla-red/20 focus:outline-none transition"
               required
-            />
-            {isToday && (
-              <p className="text-xs text-udla-gray mt-1">Hora minima: {minStartTime}</p>
+              disabled={!selectedDate}
+            >
+              <option value="">Seleccionar</option>
+              {availableStartTimes.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+            {!selectedDate && (
+              <p className="text-xs text-udla-gray mt-1">Primero selecciona una fecha</p>
             )}
           </div>
           <div>
             <label className="block text-sm font-semibold mb-2 text-udla-gray-dark">Hora de Fin</label>
-            <input
-              type="time"
+            <select
               name="endTime"
               value={selectedEndTime}
               onChange={(e) => {
                 setSelectedEndTime(e.target.value)
                 setError('')
               }}
-              min={selectedStartTime || minStartTime}
               className="w-full p-3 border border-gray-300 rounded-lg focus:border-udla-red focus:ring-2 focus:ring-udla-red/20 focus:outline-none transition"
               required
-            />
+              disabled={!selectedStartTime}
+            >
+              <option value="">Seleccionar</option>
+              {availableEndTimes.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+            {!selectedStartTime && selectedDate && (
+              <p className="text-xs text-udla-gray mt-1">Primero selecciona hora de inicio</p>
+            )}
           </div>
         </div>
 
