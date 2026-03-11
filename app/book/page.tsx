@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { mockSpaces, mockApplicants } from '@/lib/mockData'
 import ApplicantDataForm from '@/components/ApplicantDataForm'
 import SpaceSelection from '@/components/SpaceSelection'
@@ -92,6 +92,8 @@ interface PaymentData {
   cardHolderName: string
 }
 
+type EmailStatus = 'idle' | 'sending' | 'sent' | 'error'
+
 export default function BookPage() {
   const [currentStep, setCurrentStep] = useState<BookingStep>('applicant-data')
   const [applicantData, setApplicantData] = useState<ApplicantData>()
@@ -105,6 +107,8 @@ export default function BookPage() {
   const [paymentData, setPaymentData] = useState<PaymentData>()
   const [reservationNumber, setReservationNumber] = useState<string>('')
   const [validationError, setValidationError] = useState<string>('')
+  const [emailStatus, setEmailStatus] = useState<EmailStatus>('idle')
+  const [emailError, setEmailError] = useState<string>('')
 
   const handleApplicantDataSubmit = (data: ApplicantData) => {
     // Validate that the cédula matches an authorized applicant
@@ -136,6 +140,8 @@ export default function BookPage() {
     // Generate a reservation number
     const resNumber = `RES-${Date.now()}-${Math.random().toString(36).substring(7).toUpperCase()}`
     setReservationNumber(resNumber)
+    setEmailStatus('idle')
+    setEmailError('')
     setCurrentStep('confirmation')
   }
 
@@ -148,6 +154,66 @@ export default function BookPage() {
   const baseAmount = pricingRule ? durationHours * pricingRule.baseRate : 0
   const discount = pricingRule && durationHours >= pricingRule.minHours ? (baseAmount * pricingRule.bulkDiscount / 100) : 0
   const totalAmount = baseAmount - discount
+
+  useEffect(() => {
+    const sendConfirmationEmail = async () => {
+      if (
+        currentStep !== 'confirmation' ||
+        !applicantData ||
+        !selectedSpace ||
+        !reservationNumber ||
+        emailStatus !== 'idle'
+      ) {
+        return
+      }
+
+      setEmailStatus('sending')
+
+      try {
+        const response = await fetch('/api/send-confirmation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: applicantData.correo,
+            reservationNumber,
+            applicantName: `${applicantData.nombres} ${applicantData.apellidos}`,
+            spaceName: selectedSpace.name,
+            startDate: selectedDateTime.startDate,
+            startTime: selectedDateTime.startTime,
+            endTime: selectedDateTime.endTime,
+            totalAmount: totalAmount.toFixed(2),
+            rentalPurpose: selectedRentalPurpose,
+          }),
+        })
+
+        const result = await response.json()
+
+        if (!response.ok) {
+          throw new Error(result?.error || 'No fue posible enviar el correo de confirmación.')
+        }
+
+        setEmailStatus('sent')
+      } catch (error) {
+        setEmailStatus('error')
+        setEmailError(error instanceof Error ? error.message : 'Error desconocido al enviar el correo.')
+      }
+    }
+
+    void sendConfirmationEmail()
+  }, [
+    applicantData,
+    currentStep,
+    emailStatus,
+    reservationNumber,
+    selectedDateTime.endTime,
+    selectedDateTime.startDate,
+    selectedDateTime.startTime,
+    selectedRentalPurpose,
+    selectedSpace,
+    totalAmount,
+  ])
 
   return (
     <div className="bg-gray-50 min-h-screen py-10">
@@ -261,6 +327,9 @@ export default function BookPage() {
             endTime={selectedDateTime.endTime}
             totalAmount={totalAmount.toFixed(2)}
             rentalPurpose={selectedRentalPurpose}
+            applicantEmail={applicantData.correo}
+            emailStatus={emailStatus}
+            emailError={emailError}
           />
         )}
       </div>
