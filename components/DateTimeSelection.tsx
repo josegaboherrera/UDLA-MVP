@@ -16,7 +16,7 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
+    <div className="udla-surface p-8 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6">Paso 3: Seleccionar Fecha y Hora</h2>
       <form onSubmit={handleSubmit} className="max-w-md">
         <div className="mb-4">
@@ -25,7 +25,7 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
             type="date"
             name="date"
             defaultValue={selected?.startDate}
-            className="w-full p-3 border border-gray-300 rounded"
+            className="w-full p-3 border border-slate-600 bg-slate-900 text-slate-100 rounded"
             required
           />
         </div>
@@ -36,7 +36,7 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
               type="time"
               name="startTime"
               defaultValue={selected?.startTime}
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-slate-600 bg-slate-900 text-slate-100 rounded"
               required
             />
           </div>
@@ -46,14 +46,14 @@ export default function DateTimeSelection({ onSelect, selected }: DateTimeSelect
               type="time"
               name="endTime"
               defaultValue={selected?.endTime}
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-slate-600 bg-slate-900 text-slate-100 rounded"
               required
             />
           </div>
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded font-semibold hover:bg-blue-700"
+          className="w-full udla-button-primary p-3 rounded font-semibold"
         >
           Confirmar y Continuar
         </button>

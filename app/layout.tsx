@@ -17,7 +17,7 @@ export default function RootLayout({
       <body>
         <UDLABrandHeader />
         {children}
-        <footer className="mt-12 border-t border-slate-200 bg-white py-6 text-center text-sm text-slate-600">
+        <footer className="mt-12 border-t border-slate-700 bg-[#050913] py-6 text-center text-sm text-slate-300">
           Universidad de Las Américas · Plataforma de reservas institucionales
         </footer>
       </body>

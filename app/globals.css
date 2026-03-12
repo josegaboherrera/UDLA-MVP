@@ -6,11 +6,13 @@
   --udla-blue: #002d72;
   --udla-gold: #c8a24a;
   --udla-light: #f5f8fc;
+  --udla-dark: #060b16;
+  --udla-dark-surface: #0d1529;
 }
 
 body {
-  background-color: var(--udla-light);
-  color: #0f172a;
+  background-color: var(--udla-dark);
+  color: #e2e8f0;
 }
 
 .udla-gradient {
@@ -19,4 +21,40 @@ body {
 
 .udla-gold-accent {
   color: var(--udla-gold);
+}
+
+.udla-surface {
+  background-color: var(--udla-dark-surface);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.udla-button-primary {
+  background-color: var(--udla-gold);
+  color: #111827;
+  border: 1px solid #e5c778;
+}
+
+.udla-button-primary:hover {
+  background-color: #d7b563;
+}
+
+.udla-button-secondary {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+
+.udla-button-secondary:hover {
+  background-color: #334155;
+}
+
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("/udla-logo.svg") center/240px 240px no-repeat;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: -1;
 }

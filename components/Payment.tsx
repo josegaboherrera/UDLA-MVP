@@ -28,13 +28,13 @@ export default function Payment({ onSubmit, amount, spaceName, rentalPurpose }: 
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
+    <div className="udla-surface p-8 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6">Paso 4: Información de Pago</h2>
 
-      <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+      <div className="mb-6 p-4 bg-slate-900 border border-slate-700 rounded-lg">
         <h3 className="font-semibold text-lg mb-2">Resumen de la Reserva</h3>
-        <p className="text-gray-600">Espacio: {spaceName}</p>
-        {rentalPurpose && <p className="text-gray-600">Destino del Alquiler: {rentalPurpose}</p>}
+        <p className="text-slate-300">Espacio: {spaceName}</p>
+        {rentalPurpose && <p className="text-slate-300">Destino del Alquiler: {rentalPurpose}</p>}
         <p className="text-2xl font-bold text-green-600 mt-2">${amount.toFixed(2)}</p>
       </div>
 
@@ -45,7 +45,7 @@ export default function Payment({ onSubmit, amount, spaceName, rentalPurpose }: 
             type="text"
             name="cardNumber"
             placeholder="1234 5678 9012 3456"
-            className="w-full p-3 border border-gray-300 rounded"
+            className="w-full p-3 border border-slate-600 bg-slate-900 text-slate-100 rounded"
             required
             maxLength={19}
             pattern="[0-9\s]{13,19}"
@@ -59,7 +59,7 @@ export default function Payment({ onSubmit, amount, spaceName, rentalPurpose }: 
               type="text"
               name="expiryDate"
               placeholder="MM/YY"
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-slate-600 bg-slate-900 text-slate-100 rounded"
               required
               maxLength={5}
               pattern="(0[1-9]|1[0-2])\/[0-9]{2}"
@@ -71,7 +71,7 @@ export default function Payment({ onSubmit, amount, spaceName, rentalPurpose }: 
               type="text"
               name="cvv"
               placeholder="123"
-              className="w-full p-3 border border-gray-300 rounded"
+              className="w-full p-3 border border-slate-600 bg-slate-900 text-slate-100 rounded"
               required
               maxLength={4}
               pattern="[0-9]{3,4}"
@@ -85,14 +85,14 @@ export default function Payment({ onSubmit, amount, spaceName, rentalPurpose }: 
             type="text"
             name="cardHolderName"
             placeholder="Como aparece en la tarjeta"
-            className="w-full p-3 border border-gray-300 rounded"
+            className="w-full p-3 border border-slate-600 bg-slate-900 text-slate-100 rounded"
             required
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-green-600 text-white p-3 rounded font-semibold hover:bg-green-700"
+          className="w-full udla-button-primary p-3 rounded font-semibold"
         >
           Procesar Pago y Confirmar Reserva
         </button>
