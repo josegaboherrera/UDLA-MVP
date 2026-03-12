@@ -90,6 +90,40 @@ lib/
 public/                  # Static assets
 ```
 
+## Ajuste manual de logos
+
+Si ves logos incorrectos, puedes corregirlos manualmente en 3 lugares:
+
+1. **Archivo base del logo**
+   - Reemplaza `public/udla-logo.svg` con el archivo correcto manteniendo el mismo nombre.
+   - Si prefieres otro formato (`.png`, `.webp`), súbelo a `public/` y actualiza las rutas `src` que hoy apuntan a `/udla-logo.svg`.
+
+2. **Componentes que muestran el logo**
+   - Actualmente usan `<img src="/udla-logo.svg" ... />` en:
+     - `components/UDLABrandHeader.tsx`
+     - `components/Hero.tsx`
+     - `components/BookingProcess.tsx`
+     - `components/ContactSection.tsx`
+     - `components/ApplicantDataForm.tsx`
+     - `app/admin/layout.tsx`
+
+3. **Marca de agua de fondo**
+   - En `app/globals.css`, la clase `.watermark-bg` también usa `url("/udla-logo.svg")`.
+   - Si cambias el nombre del archivo, actualiza esa URL para evitar que siga saliendo el logo antiguo.
+
+### Verificación rápida
+
+```bash
+npm run dev
+```
+
+Después revisa:
+- Home (`/`)
+- Flujo de reserva (`/book`)
+- Admin (`/admin`)
+
+Si en algún sitio persiste el logo viejo, limpia caché fuerte del navegador (Ctrl/Cmd + Shift + R) porque los assets de `public/` pueden quedar cacheados.
+
 ## Demo Users
 
 For testing the booking flow, use these demo IDs:
