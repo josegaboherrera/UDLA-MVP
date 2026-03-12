@@ -29,101 +29,46 @@ export default function ApplicantDataForm({ onSubmit, initialData, error }: Appl
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 udla-surface rounded-xl p-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Datos del Solicitante
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Ingrese sus datos personales para reservar un espacio
-          </p>
+          <img src="/udla-logo.svg" alt="Logo UDLA" className="mx-auto h-16 w-16" />
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">Datos del Solicitante</h2>
+          <p className="mt-2 text-center text-sm text-slate-300">Ingrese sus datos personales para reservar un espacio</p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="nombres" className="sr-only">
-                Nombres
-              </label>
-              <input
-                id="nombres"
-                name="nombres"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Nombres"
-                defaultValue={initialData?.nombres}
-              />
-            </div>
-            <div>
-              <label htmlFor="apellidos" className="sr-only">
-                Apellidos
-              </label>
-              <input
-                id="apellidos"
-                name="apellidos"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Apellidos"
-                defaultValue={initialData?.apellidos}
-              />
-            </div>
-            <div>
-              <label htmlFor="cedula" className="sr-only">
-                Cédula
-              </label>
-              <input
-                id="cedula"
-                name="cedula"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Cédula"
-                defaultValue={initialData?.cedula}
-              />
-            </div>
-            <div>
-              <label htmlFor="correo" className="sr-only">
-                Correo Electrónico
-              </label>
-              <input
-                id="correo"
-                name="correo"
-                type="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Correo Electrónico"
-                defaultValue={initialData?.correo}
-              />
-            </div>
-            <div>
-              <label htmlFor="telefono" className="sr-only">
-                Teléfono
-              </label>
-              <input
-                id="telefono"
-                name="telefono"
-                type="tel"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Teléfono"
-                defaultValue={initialData?.telefono}
-              />
-            </div>
+            {[
+              ['nombres', 'Nombres', initialData?.nombres, 'text'],
+              ['apellidos', 'Apellidos', initialData?.apellidos, 'text'],
+              ['cedula', 'Cédula', initialData?.cedula, 'text'],
+              ['correo', 'Correo Electrónico', initialData?.correo, 'email'],
+              ['telefono', 'Teléfono', initialData?.telefono, 'tel'],
+            ].map(([name, placeholder, value, type], idx) => (
+              <div key={name}>
+                <input
+                  id={name}
+                  name={name}
+                  type={type}
+                  required
+                  className={`appearance-none relative block w-full px-3 py-2 border border-slate-600 bg-slate-900 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--udla-gold)] focus:z-10 sm:text-sm ${
+                    idx === 0 ? 'rounded-t-md' : idx === 4 ? 'rounded-b-md' : ''
+                  }`}
+                  placeholder={placeholder}
+                  defaultValue={value as string | undefined}
+                />
+              </div>
+            ))}
           </div>
 
           {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-700">{error}</div>
+            <div className="rounded-md bg-red-950/50 border border-red-700 p-4">
+              <div className="text-sm text-red-200">{error}</div>
             </div>
           )}
 
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
+            <button type="submit" className="udla-button-primary relative w-full py-2 px-4 text-sm font-medium rounded-md">
               Continuar
             </button>
           </div>

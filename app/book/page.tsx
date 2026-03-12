@@ -216,7 +216,7 @@ export default function BookPage() {
   ])
 
   return (
-    <div className="bg-gray-50 min-h-screen py-10">
+    <div className="min-h-screen py-10 bg-[#060b16]">
       <div className="container mx-auto max-w-4xl">
         {/* Progress Indicator */}
         <div className="mb-10">
@@ -232,24 +232,24 @@ export default function BookPage() {
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                     currentStep === item.step
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-[var(--udla-gold)] text-[#111827]'
                       : ['applicant-data', 'space-selection', 'date-time', 'payment', 'confirmation'].indexOf(
                           currentStep
                         ) > ['applicant-data', 'space-selection', 'date-time', 'payment', 'confirmation'].indexOf(item.step)
-                      ? 'bg-green-600 text-white'
-                      : 'bg-gray-300 text-gray-700'
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-slate-700 text-slate-200'
                   }`}
                 >
                   {index + 1}
                 </div>
-                <span className="text-xs ml-2">{item.label}</span>
+                <span className="text-xs ml-2 text-slate-300">{item.label}</span>
                 {index < 4 && (
                   <div
                     className={`h-1 flex-1 mx-2 ${
                       ['applicant-data', 'space-selection', 'date-time', 'payment', 'confirmation'].indexOf(currentStep) >
                       ['applicant-data', 'space-selection', 'date-time', 'payment', 'confirmation'].indexOf(item.step)
-                        ? 'bg-green-600'
-                        : 'bg-gray-300'
+                        ? 'bg-emerald-600'
+                        : 'bg-slate-700'
                     }`}
                   />
                 )}
@@ -266,14 +266,14 @@ export default function BookPage() {
         {currentStep === 'space-selection' && applicantData && (
           <div>
             <div className="mb-6 text-center">
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 ¡Bienvenido, <strong>{applicantData.nombres} {applicantData.apellidos}</strong>! Por favor selecciona un espacio para reservar.
               </p>
             </div>
             <SpaceSelection spaces={mockSpaces} selectedSpaceId={selectedSpaceId} selectedRentalPurpose={selectedRentalPurpose} onSelect={handleSpaceSelect} />
             <button
               onClick={() => setCurrentStep('applicant-data')}
-              className="mt-6 mx-auto block bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
+              className="mt-6 mx-auto block udla-button-secondary px-6 py-2 rounded"
             >
               Atrás
             </button>
@@ -283,17 +283,17 @@ export default function BookPage() {
         {currentStep === 'date-time' && selectedSpace && applicantData && (
           <div>
             <div className="mb-6 text-center">
-              <p className="text-gray-600">
+              <p className="text-slate-300">
                 Seleccionaste: <strong>{selectedSpace.name}</strong>
               </p>
-              <p className="text-sm text-gray-500 mt-2">
+              <p className="text-sm text-slate-400 mt-2">
                 Destino: <strong>{selectedRentalPurpose}</strong>
               </p>
             </div>
             <DateTimeSelection onSelect={handleDateTimeSelect} selected={selectedDateTime} />
             <button
               onClick={() => setCurrentStep('space-selection')}
-              className="mt-6 mx-auto block bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
+              className="mt-6 mx-auto block udla-button-secondary px-6 py-2 rounded"
             >
               Atrás
             </button>
@@ -310,7 +310,7 @@ export default function BookPage() {
             />
             <button
               onClick={() => setCurrentStep('date-time')}
-              className="mt-6 mx-auto block bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500"
+              className="mt-6 mx-auto block udla-button-secondary px-6 py-2 rounded"
             >
               Atrás
             </button>

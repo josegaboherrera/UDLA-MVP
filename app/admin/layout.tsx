@@ -12,7 +12,7 @@ export default function AdminLayout({
       <aside className="relative w-72 bg-[#001b47] text-white">
         <div className="border-b border-white/20 p-8">
           <div className="mb-4 flex items-center gap-3">
-            <img src="/udla-logo.svg" alt="Logo UDLA" className="h-11 w-11 rounded bg-white p-1" />
+            <img src="/udla-logo.svg" alt="Logo UDLA" className="h-11 w-11 rounded" />
             <h1 className="text-2xl font-bold">UDLA Admin</h1>
           </div>
           <p className="text-sm text-blue-100">Sistema de Gestión de Espacios</p>
@@ -43,7 +43,7 @@ export default function AdminLayout({
         </div>
       </aside>
 
-      <main className="flex-1 bg-[#f5f8fc]">
+      <main className="flex-1 bg-[#060b16] text-slate-100">
         <div className="container mx-auto px-8">{children}</div>
       </main>
     </div>
