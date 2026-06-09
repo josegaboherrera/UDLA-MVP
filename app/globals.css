@@ -30,3 +30,12 @@ button:not(.btn-link) {
 button:not(.btn-link):hover {
   background-color: #1f1f1f !important;
 }
+
+/* En secciones con fondo blanco/claro, el texto va en negro para mantener contraste */
+.bg-white,
+.bg-gray-50,
+.bg-gray-100,
+[class*="udla-white"],
+[class*="udla-gray-light"] {
+  color: var(--udla-black);
+}
